@@ -25,11 +25,7 @@ const List<String> currenciesList = [
   'ZAR'
 ];
 
-const List<String> cryptoList = [
-  'BTC',
-  'ETH',
-  'LTC',
-];
+const List<String> cryptoList = ['BTC', 'ETH', 'LTC', 'MNR', 'ZEC', ''];
 
 const bitcoinAverageURL =
     'https://apiv2.bitcoinaverage.com/indices/global/ticker';
