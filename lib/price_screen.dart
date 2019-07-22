@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'coin_data.dart';
 import 'package:flutter/cupertino.dart';
+import 'coin_data.dart';
 import 'dart:io' show Platform;
 
 class PriceScreen extends StatefulWidget {
@@ -9,7 +9,7 @@ class PriceScreen extends StatefulWidget {
 }
 
 class _PriceScreenState extends State<PriceScreen> {
-  String selectedCurrency = 'USD';
+  String selectedCurrency = 'AUD';
 
   DropdownButton<String> androidDropdown() {
     List<DropdownMenuItem<String>> dropdownItems = [];
@@ -31,29 +31,10 @@ class _PriceScreenState extends State<PriceScreen> {
         });
       },
     );
-
-//    for (String currency in currenciesList) {
-//      var newItem = DropdownMenuItem(
-//        child: Text(currency),
-//        value: currency,
-//      );
-//      dropdownItems.add(newItem);
-//    }
-//
-//    return DropdownButton(
-//      value: selectedCurrency,
-//      items: dropdownItems,
-//      onChanged: (value) {
-//        setState(() {
-//          selectedCurrency = value;
-//        });
-//      },
-//    );
   }
 
-  CupertinoPicker IOSPicker() {
+  CupertinoPicker iOSPicker() {
     List<Text> pickerItems = [];
-
     for (String currency in currenciesList) {
       pickerItems.add(Text(currency));
     }
@@ -71,23 +52,14 @@ class _PriceScreenState extends State<PriceScreen> {
     );
   }
 
-//  Widget getPicker() {
-//    if (Platform.isIOS) {
-//      return IOSPicker();
-//    } else if (Platform.isAndroid) {
-//      return androidDropdown();
-//    }
-//  }
-
   Map<String, String> coinValues = {};
-
   bool isWaiting = false;
 
   void getData() async {
     isWaiting = true;
     try {
       var data = await CoinData().getCoinData(selectedCurrency);
-      isWaiting - false;
+      isWaiting = false;
       setState(() {
         coinValues = data;
       });
@@ -97,27 +69,26 @@ class _PriceScreenState extends State<PriceScreen> {
   }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     getData();
   }
 
-  Column makeCards(){
+  Column makeCards() {
     List<CryptoCard> cryptoCards = [];
-    for(String crypto in cryptoList)
+    for (String crypto in cryptoList) {
       cryptoCards.add(
-      cryptoCard(
-        cryptoCurrency : crypto,
-        selectedCurrency: selectedCurrency,
-        value: isWaiting? '?' : coinValues[crypto],
-      ),
-    );
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch;
-      children: cryptoCards,
+        CryptoCard(
+          cryptoCurrency: crypto,
+          selectedCurrency: selectedCurrency,
+          value: isWaiting ? '?' : coinValues[crypto],
+        ),
       );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: cryptoCards,
+    );
   }
 
   @override
@@ -130,33 +101,13 @@ class _PriceScreenState extends State<PriceScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
-            child: Card(
-              color: Colors.lightBlueAccent,
-              elevation: 5.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
-                child: Text(
-                  '1 BTC = ? USD',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          makeCards(),
           Container(
             height: 150.0,
             alignment: Alignment.center,
             padding: EdgeInsets.only(bottom: 30.0),
             color: Colors.lightBlue,
-            child: Platform.isIOS ? IOSPicker() : androidDropdown(),
+            child: Platform.isIOS ? iOSPicker() : androidDropdown(),
           ),
         ],
       ),
@@ -164,20 +115,19 @@ class _PriceScreenState extends State<PriceScreen> {
   }
 }
 
-
-class CryptoCard extends StatelessWidget{
+class CryptoCard extends StatelessWidget {
   const CryptoCard({
     this.value,
     this.selectedCurrency,
     this.cryptoCurrency,
-});
+  });
 
   final String value;
   final String selectedCurrency;
   final String cryptoCurrency;
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
       child: Card(
@@ -186,8 +136,18 @@ class CryptoCard extends StatelessWidget{
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-
-      )
-    )
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
+          child: Text(
+            '1 $cryptoCurrency = $value $selectedCurrency',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20.0,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
