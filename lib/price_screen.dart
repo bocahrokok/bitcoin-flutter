@@ -11,6 +11,7 @@ class PriceScreen extends StatefulWidget {
 class _PriceScreenState extends State<PriceScreen> {
   String selectedCurrency = 'AUD';
 
+  //android version dropdown
   DropdownButton<String> androidDropdown() {
     List<DropdownMenuItem<String>> dropdownItems = [];
     for (String currency in currenciesList) {
@@ -21,6 +22,7 @@ class _PriceScreenState extends State<PriceScreen> {
       dropdownItems.add(newItem);
     }
 
+    //returning dropdown with value and behaviour
     return DropdownButton<String>(
       value: selectedCurrency,
       items: dropdownItems,
@@ -33,6 +35,7 @@ class _PriceScreenState extends State<PriceScreen> {
     );
   }
 
+  //ios version dropdown
   CupertinoPicker iOSPicker() {
     List<Text> pickerItems = [];
     for (String currency in currenciesList) {
@@ -52,9 +55,12 @@ class _PriceScreenState extends State<PriceScreen> {
     );
   }
 
+  //Map string
+
   Map<String, String> coinValues = {};
   bool isWaiting = false;
 
+  //get data from api
   void getData() async {
     isWaiting = true;
     try {
@@ -68,12 +74,14 @@ class _PriceScreenState extends State<PriceScreen> {
     }
   }
 
+  //make it works
   @override
   void initState() {
     super.initState();
     getData();
   }
 
+  //joined cryptocard
   Column makeCards() {
     List<CryptoCard> cryptoCards = [];
     for (String crypto in cryptoList) {
@@ -96,17 +104,21 @@ class _PriceScreenState extends State<PriceScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('🤑 Coin Ticker'),
+        backgroundColor: Colors.greenAccent,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
+          //cryptocurrencies card
           makeCards(),
+          //the picker ios or android
           Container(
             height: 150.0,
             alignment: Alignment.center,
             padding: EdgeInsets.only(bottom: 30.0),
             color: Colors.greenAccent,
+            //the currency picker
             child: Platform.isIOS ? iOSPicker() : androidDropdown(),
           ),
         ],
@@ -115,6 +127,7 @@ class _PriceScreenState extends State<PriceScreen> {
   }
 }
 
+//cryptocard strach
 class CryptoCard extends StatelessWidget {
   const CryptoCard({
     this.value,
