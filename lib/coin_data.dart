@@ -29,9 +29,9 @@ const List<String> cryptoList = [
   'BTC',
   'ETH',
   'LTC',
-  'MNR',
-  'ZEC',
-  'XRP',
+//  'MNR',
+//  'ZEC',
+//  'XRP'
 ];
 
 const bitcoinAverageURL =
