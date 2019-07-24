@@ -34,8 +34,11 @@ const List<String> cryptoList = [
 //  'XRP'
 ];
 
+//const for the url
 const bitcoinAverageURL =
     'https://apiv2.bitcoinaverage.com/indices/global/ticker';
+
+//coin data with exception
 
 class CoinData {
   Future getCoinData(String selectedCurrency) async {
