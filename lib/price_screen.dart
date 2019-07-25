@@ -3,8 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'coin_data.dart';
 import 'dart:io' show Platform;
 
-
-
 class PriceScreen extends StatefulWidget {
   @override
   _PriceScreenState createState() => _PriceScreenState();
@@ -43,7 +41,7 @@ class _PriceScreenState extends State<PriceScreen> {
     for (String currency in currenciesList) {
       pickerItems.add(Text(currency));
     }
-  //picker widget only
+    //picker widget only
     return CupertinoPicker(
       backgroundColor: Colors.greenAccent,
       itemExtent: 32.0,
