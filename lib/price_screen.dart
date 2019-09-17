@@ -104,28 +104,33 @@ class _PriceScreenState extends State<PriceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('🤑 Coin Ticker'),
-        backgroundColor: Colors.greenAccent,
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          //cryptocurrencies card
-          makeCards(),
-          //the picker ios or android
-          Container(
-            height: 150.0,
-            alignment: Alignment.center,
-            padding: EdgeInsets.only(bottom: 30.0),
-            color: Colors.greenAccent,
-            //the currency picker
-            child: Platform.isIOS ? iOSPicker() : androidDropdown(),
-          ),
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: Text('Crypto Ticker'),
+          backgroundColor: Colors.greenAccent,
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            //cryptocurrencies card
+            makeCards(),
+            //the picker ios or android
+            Container(
+              height: 150.0,
+              alignment: Alignment.center,
+              padding: EdgeInsets.only(bottom: 30.0),
+              color: Colors.greenAccent,
+              //the currency picker
+              child: Platform.isIOS ? iOSPicker() : androidDropdown(),
+            ),
+          ],
+        ),
+        bottomNavigationBar: BottomAppBar(
+            child: Text(
+              'Nurrizky Imani 2018 for OmahTi',
+              textAlign: TextAlign.center,
+            ),
+            notchMargin: 9.0));
   }
 }
 
